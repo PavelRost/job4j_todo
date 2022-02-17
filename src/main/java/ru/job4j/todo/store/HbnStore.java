@@ -2,6 +2,7 @@ package ru.job4j.todo.store;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -11,6 +12,7 @@ import ru.job4j.todo.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.function.Function;
 
 public class HbnStore implements Store, AutoCloseable {
 
@@ -55,27 +57,25 @@ public class HbnStore implements Store, AutoCloseable {
 
     @Override
     public List<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List rsl = session.createQuery("from Item").list();
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
+        return this.tx(
+                session -> session.createQuery("from Item").list()
+        );
     }
 
     @Override
     public List<Item> findByStatusTask(Boolean status) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<Item> temp = session.createQuery("from Item").list();
-        List<Item> rsl = new ArrayList<>();
-        for (var item : temp) {
-            if (item.isDone() == status) {
-                rsl.add(item);
-            }
-        }
-        session.close();
-        return rsl;
+        return this.tx(
+                session -> {
+                    List<Item> temp = session.createQuery("from Item").list();
+                    List<Item> rsl = new ArrayList<>();
+                    for (var item : temp) {
+                        if (item.isDone() == status) {
+                            rsl.add(item);
+                        }
+                    }
+                    return rsl;
+                }
+        );
     }
 
     @Override
@@ -91,5 +91,14 @@ public class HbnStore implements Store, AutoCloseable {
     @Override
     public void close() throws Exception {
         StandardServiceRegistryBuilder.destroy(registry);
+    }
+
+    private <T> T tx(final Function<Session, T> command) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        T rsl = command.apply(session);
+        session.getTransaction().commit();
+        session.close();
+        return rsl;
     }
 }
