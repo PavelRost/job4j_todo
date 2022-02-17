@@ -92,10 +92,4 @@ public class HbnStore implements Store, AutoCloseable {
     public void close() throws Exception {
         StandardServiceRegistryBuilder.destroy(registry);
     }
-
-    public static void main(String[] args) {
-        //HbnStore.instOf().add(new Item("Тестовая заявка №4"));
-        List<Item> temp = HbnStore.instOf().findByStatusTask(true);
-        temp.forEach(System.out::println);
-    }
 }
