@@ -37,6 +37,13 @@
 <body>
 <div class="container pt-3">
     <div class="row">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/auth.jsp"> <c:out value="${user.name}" default="Гость"/> | Выйти</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Форма создания новой заявки
@@ -69,6 +76,9 @@
                             <a href="<%=request.getContextPath()%>/change.do?id=<%=item.getId()%>">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </a>
+                        </td>
+                        <td>
+                            <%=item.getUser()%>
                         </td>
                     </tr>
                     <% } %>

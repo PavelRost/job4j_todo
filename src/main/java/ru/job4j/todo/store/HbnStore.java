@@ -8,6 +8,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
 import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,18 @@ public class HbnStore implements Store, AutoCloseable {
     }
 
     @Override
+    public List<User> findUserByEmail(String email) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from User u where u.email = :paramEmail");
+        query.setParameter("paramEmail", email);
+        List<User> rsl = query.list();
+        session.getTransaction().commit();
+        session.close();
+        return rsl;
+    }
+
+    @Override
     public Item add(Item item) {
         Session session = sf.openSession();
         session.beginTransaction();
@@ -40,6 +53,16 @@ public class HbnStore implements Store, AutoCloseable {
         session.getTransaction().commit();
         session.close();
         return item;
+    }
+
+    @Override
+    public User addUser(User user) {
+        Session session = sf.openSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+        session.close();
+        return user;
     }
 
     @Override
