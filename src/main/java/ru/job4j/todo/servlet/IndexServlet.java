@@ -17,6 +17,7 @@ public class IndexServlet extends HttpServlet {
         req.setAttribute("allTasks", HbnStore.instOf().findAll());
         req.setAttribute("taskDoneTrue", HbnStore.instOf().findByStatusTask(true));
         req.setAttribute("user", req.getSession().getAttribute("user"));
+        req.setAttribute("allCategory", HbnStore.instOf().findAllCategory());
         req.getRequestDispatcher("index.jsp").forward(req, resp);
 
     }
@@ -24,8 +25,9 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
+        String[] ctgIds = req.getParameterValues("ctgId");
         User currentUser = (User) req.getSession().getAttribute("user");
-        HbnStore.instOf().add(new Item(req.getParameter("description"), currentUser));
+        HbnStore.instOf().add(new Item(req.getParameter("description"), currentUser), ctgIds);
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 }

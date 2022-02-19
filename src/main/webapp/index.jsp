@@ -54,6 +54,16 @@
                         <label>Наименование новой задачи</label>
                         <input type="text" class="form-control" title="Введите имя новой задачи" id="newTask" name="description">
                     </div>
+                    <div class="form-group row">
+                        <label class="col-form-label col-sm-3" for="ctgId" style="font-weight: 900">Список категорий</label>
+                        <div class="col-sm-5">
+                            <select class="form-control" name="ctgId" id="ctgId" multiple>
+                                <c:forEach items="${allCategory}" var="category">
+                                    <option value='<c:out value="${category.id}"/>'>${category.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-primary" onclick="return validate();">Добавить задачу</button>
                 </form>
             </div>

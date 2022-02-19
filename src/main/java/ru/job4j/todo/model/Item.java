@@ -3,6 +3,8 @@ package ru.job4j.todo.model;
 import javax.persistence.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "items")
@@ -21,12 +23,19 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Category> categorySet = new HashSet<>();
+
     public Item() {
     }
 
     public Item(String description, User user) {
         this.description = description;
         this.user = user;
+    }
+
+    public void addCategory(Category category) {
+        this.categorySet.add(category);
     }
 
     public int getId() {
