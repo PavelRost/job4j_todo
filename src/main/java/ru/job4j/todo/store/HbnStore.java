@@ -2,7 +2,6 @@ package ru.job4j.todo.store;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -12,7 +11,6 @@ import ru.job4j.todo.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 
 public class HbnStore implements Store, AutoCloseable {
@@ -34,15 +32,15 @@ public class HbnStore implements Store, AutoCloseable {
     }
 
     @Override
-    public List<User> findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         Session session = sf.openSession();
         session.beginTransaction();
         Query query = session.createQuery("from User u where u.email = :paramEmail");
         query.setParameter("paramEmail", email);
-        List<User> rsl = query.list();
+        User user = (User) query.uniqueResult();
         session.getTransaction().commit();
         session.close();
-        return rsl;
+        return user;
     }
 
     @Override

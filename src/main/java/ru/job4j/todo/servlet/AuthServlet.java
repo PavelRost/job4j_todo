@@ -21,10 +21,10 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
-        List<User> user = HbnStore.instOf().findUserByEmail(email);
-        if (user.size() != 0) {
+        User user = HbnStore.instOf().findUserByEmail(email);
+        if (user != null) {
             HttpSession sc = req.getSession();
-            sc.setAttribute("user", user.get(0));
+            sc.setAttribute("user", user);
             resp.sendRedirect(req.getContextPath() + "/index.do");
         } else {
             req.setAttribute("error", "Не верный email или пароль");

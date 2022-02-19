@@ -18,7 +18,7 @@ public class RegServlet extends HttpServlet {
         String email = req.getParameter("email");
         String name = req.getParameter("name");
         String password = req.getParameter("password");
-        if (HbnStore.instOf().findUserByEmail(email).size() != 0) {
+        if (HbnStore.instOf().findUserByEmail(email) != null) {
             req.setAttribute("error", "Пользователь с таким email уже зарегистрирован на сайте");
             req.getRequestDispatcher("reg.jsp").forward(req, resp);
         } else {
