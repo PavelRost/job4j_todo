@@ -15,6 +15,8 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created = new Date(System.currentTimeMillis());
     private String description;
     private boolean done = false;
