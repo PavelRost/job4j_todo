@@ -105,19 +105,16 @@
             <div class="card-header">
                 <div class="btn-group">
                     <form action="<%=request.getContextPath()%>/index.do" method="get">
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Отобразить завершенные</button>
+                        <button type="submit" name="action" value="done" class="btn btn-outline-primary btn-sm">Отобразить завершенные</button>
                     </form>
                     <form action="<%=request.getContextPath()%>/index.do" method="get">
-                        <button type="submit" class="btn btn-outline-primary btn-sm">Отобразить все заявки</button>
+                        <button type="submit" name="action" value="all" class="btn btn-outline-primary btn-sm">Отобразить все заявки</button>
                     </form>
                 </div>
             </div>
             <div class="card-body">
                 <table class="table">
                     <tbody>
-                    <div class="card-header">
-                        Завершенные задачи:
-                    </div>
                     <c:forEach items="${taskDoneTrue}" var="taskDone">
                         <tr>
                             <td>
@@ -125,15 +122,6 @@
                             </td>
                         </tr>
                     </c:forEach>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-body">
-                <table class="table">
-                    <tbody>
-                    <div class="card-header">
-                        Задачи за весь период:
-                    </div>
                     <c:forEach items="${allTasks}" var="task">
                         <tr>
                             <td>

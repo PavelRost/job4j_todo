@@ -14,12 +14,16 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("allTasks", HbnStore.instOf().findAll());
-        req.setAttribute("taskDoneTrue", HbnStore.instOf().findByStatusTask(true));
-        req.setAttribute("user", req.getSession().getAttribute("user"));
+        String act = req.getParameter("action");
+        if ("all".equals(act)) {
+            req.setAttribute("allTasks", HbnStore.instOf().findAll());
+        } else if ("done".equals(act)) {
+            req.setAttribute("taskDoneTrue", HbnStore.instOf().findByStatusTask(true));
+        } else {
+            req.setAttribute("user", req.getSession().getAttribute("user"));
+        }
         req.setAttribute("allCategory", HbnStore.instOf().findAllCategory());
         req.getRequestDispatcher("index.jsp").forward(req, resp);
-
     }
 
     @Override

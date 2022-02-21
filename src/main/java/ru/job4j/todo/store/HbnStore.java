@@ -21,7 +21,7 @@ public class HbnStore implements Store, AutoCloseable {
     private final SessionFactory sf = new MetadataSources(registry)
             .buildMetadata().buildSessionFactory();
 
-    public HbnStore() {
+    private HbnStore() {
     }
 
     private static final class Lazy {
