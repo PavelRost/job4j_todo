@@ -21,4 +21,6 @@
 ![Перечень всех заявок](https://user-images.githubusercontent.com/92044501/154848244-46d0cce7-72f7-47d0-85fe-2f48a43b4847.jpg)
 
 **Вывод задач по заданным фильтрам:**
-![Заявки по фильтрам](https://user-images.githubusercontent.com/92044501/154848254-c5e835a4-2a79-43e4-9bec-93e0c1c0ba11.jpg)
+![Screenshot_4](https://user-images.githubusercontent.com/92044501/155004817-1704c3bb-2f09-4b64-8d61-667502f9e486.jpg)
+
+![Screenshot_3](https://user-images.githubusercontent.com/92044501/155004822-5a3df307-e11c-4b10-84fb-1f508114e570.jpg)
